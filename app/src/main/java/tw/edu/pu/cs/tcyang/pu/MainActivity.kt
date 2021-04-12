@@ -7,12 +7,14 @@ import android.view.MotionEvent
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
+class MainActivity : AppCompatActivity(),
+    GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     lateinit var gDetector: GestureDetector
 
     var PictureNo:Int = 0  //目前顯示第幾張圖
     var TotalPictures:Int = 0 //總共幾張圖片(假設僅顯示pu0-pu3)
+    var Flag:Boolean =false
 
 
     fun ShowPicture() {
@@ -81,6 +83,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     override fun onDown(e: MotionEvent?): Boolean {
         //TODO("Not yet implemented")
         //txv.text = "按下"
+        Flag =true
         return true
     }
 
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         //txv.text = "快滑\nx1y1: " + e1.getX().toString() + ", " + e1.getY().toString() +
         //        "\nx2y2: " + e2.getX().toString() + ", " + e2.getY().toString() +
         //        "\nX軸Y軸速度:" + velocityX.toString() + ", " +  velocityY.toString()
+        /*
         if (e1.getX() < e2.getX()){  //向右快滑
             PictureNo++
             if (PictureNo == TotalPictures) {PictureNo = 0}
@@ -103,6 +107,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             if (PictureNo < 0) {PictureNo = TotalPictures - 1 }
         }
         ShowPicture()
+
+         */
 
         return true
     }
@@ -116,13 +122,44 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         //TODO("Not yet implemented")
         //txv.text = "拖曳\nx1y1: " +  e1.getX().toString() + ", " + e1.getY().toString() +
         //        "\nx2y2: " + e2.getX().toString() + ", " + e2.getY().toString()
+        if (Flag){
+            if (e1.getY() < e2.getY()){  //向up
+                PictureNo++
+                if (PictureNo == TotalPictures) {PictureNo = 0}
+            }
+            else{     //向down
+                PictureNo--;
+                if (PictureNo < 0) {PictureNo = TotalPictures - 1 }
+            }
+            ShowPicture()
+            Flag=false
+        }
+
+
         return true
     }
 
     override fun onLongPress(e: MotionEvent?) {
         //TODO("Not yet implemented")
+        //PictureNo = TotalPictures - 1
+        //ShowPicture()
+        //txv.text = "長按"
+    }
+
+    override fun onSingleTapConfirmed(p0: MotionEvent?): Boolean {
+        //TODO("Not yet implemented")
+        return true
+    }
+
+    override fun onDoubleTap(p0: MotionEvent?): Boolean {
+        //TODO("Not yet implemented")
         PictureNo = TotalPictures - 1
         ShowPicture()
-        //txv.text = "長按"
+        return true
+    }
+
+    override fun onDoubleTapEvent(p0: MotionEvent?): Boolean {
+        //TODO("Not yet implemented")
+        return true
     }
 }
