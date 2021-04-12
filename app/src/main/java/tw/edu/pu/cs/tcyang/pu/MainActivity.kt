@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     fun ShowPicture() {
         /*
+
         when (PictureNo) {
             0 -> img.setImageResource(R.drawable.pu0)
             1 -> img.setImageResource(R.drawable.pu1)
